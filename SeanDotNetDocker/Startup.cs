@@ -25,6 +25,8 @@ namespace SeanDotNetDocker
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<DBContext>(options => options.UseMySql(Configuration.GetConnectionString("ConnectionString_MySql_Localhost")));
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -40,7 +42,7 @@ namespace SeanDotNetDocker
 
         private void DependencyInjectionContainer(IServiceCollection services)
         {
-            services.AddDbContext<DBContext>(options => options.UseMySql(Configuration.GetConnectionString("ConnectionString_MySql_Localhost")));
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

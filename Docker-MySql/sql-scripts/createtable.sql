@@ -33,5 +33,5 @@ CREATE TABLE `WebSettings` (
    PRIMARY KEY (`Id`)
  ) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 
-INSERT INTO WebSettings (SettingsKey, Value)
+INSERT INTO WebSettings (SettingKey, Value)
 VALUES ('sean', 'Sean is genius');
