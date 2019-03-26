@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  seandotnetdocker:
+    image: ${DOCKER_REGISTRY}seandotnetdocker
+    build:
+      context: .
+      dockerfile: SeanDotNetDocker/Dockerfile
+
+  mysql:
+    container_name: seanmysql
+    build: ./Docker-Mysql/.
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - '3306:3306'
