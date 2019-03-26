@@ -25,9 +25,13 @@ CREATE TABLE `Users` (
   UNIQUE KEY `Email` (`Email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `WebSettings`;
 CREATE TABLE `WebSettings` (
    `Id` int(11) NOT NULL AUTO_INCREMENT,
    `SettingKey` varchar(256) NOT NULL,
    `Value` varchar(256) NOT NULL,
    PRIMARY KEY (`Id`)
- ) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8
+ ) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+
+INSERT INTO WebSettings (SettingsKey, Value)
+VALUES ('sean', 'Sean is genius');

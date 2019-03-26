@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SeanDotNetDocker.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,6 @@ namespace SeanDotNetDocker.DataAccess
         }
 
         // Db
-
+        public virtual DbSet<WebSettingModel> WebSettings { get; set; }
     }
 }

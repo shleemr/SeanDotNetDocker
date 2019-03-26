@@ -4,14 +4,27 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SeanDotNetDocker.DataAccess;
 using SeanDotNetDocker.Models;
 
 namespace SeanDotNetDocker.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly DBContext _db;
+
+        public HomeController(DBContext db)
         {
+            _db = db;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var foo = await _db.WebSettings.Where(s => s.SettingKey.Equals("sean")).FirstOrDefaultAsync();
+            if (foo != null)
+                ViewBag.msg = foo.Value;
+            else ViewBag.msg = "fuck you!";
             return View();
         }
 
