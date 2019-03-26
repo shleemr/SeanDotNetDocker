@@ -6,11 +6,19 @@ services:
     build:
       context: .
       dockerfile: SeanDotNetDocker/Dockerfile
+    ports:
+      - "32774:80"
+    restart: always
+    environment:
+      - MYSQL_SERVER_NAME=seanmysql
+      - ASPNETCORE_ENVIRONMENT=Development
+    links:
+      - seanmysql
 
-  mysql:
+  seanmysql:
     container_name: seanmysql
     build: ./Docker-Mysql/.
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     ports:
-      - '3306:3306'
+      - "3306:3306"
