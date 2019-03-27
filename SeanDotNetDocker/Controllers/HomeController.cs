@@ -4,6 +4,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,13 +19,12 @@ namespace SeanDotNetDocker.Controllers
         private readonly DBContext _db;
 
         private IConfiguration _config;
+        private IHostingEnvironment _he;
 
-        private MySqlConnection _con;
-        private MySqlDataReader _dataReader;
-
-        public HomeController(DBContext db)
+        public HomeController(DBContext db, IHostingEnvironment he)
         {
             _db = db;
+            _he = he;
         }
 
         public async Task<IActionResult> Index()
@@ -33,6 +33,9 @@ namespace SeanDotNetDocker.Controllers
             //if (foo != null)
             //    ViewBag.msg = foo.Value;
             //else ViewBag.msg = "fuck you!";
+            
+            ViewBag.HE = _he.EnvironmentName;
+
             return View();
         }
 
