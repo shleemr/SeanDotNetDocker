@@ -3,6 +3,7 @@ version: '3.4'
 services:
   seandotnetdocker:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
+      - MYSQLCONNECTIONSTRING=server=seanmysql;port=3306;database=seandb;user=root;password=tough2983;
     ports:
       - "80:80"

@@ -15,17 +15,21 @@ namespace SeanDotNetDocker
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment he)
         {
             Configuration = configuration;
+            environment = he;
         }
 
         public IConfiguration Configuration { get; }
+        public IHostingEnvironment environment { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DBContext>(options => options.UseMySql(Configuration.GetConnectionString("ConnectionString_MySql_Localhost")));
+            if(environment.IsStaging() || environment.IsProduction())
+                services.AddDbContext<DBContext>(options => options.UseMySql(Configuration.GetConnectionString("ConnectionString_MySql_Docker")));
+            else services.AddDbContext<DBContext>(options => options.UseMySql(Configuration.GetConnectionString("ConnectionString_MySql_Localhost")));
 
             services.Configure<CookiePolicyOptions>(options =>
             {
