@@ -41,7 +41,7 @@ namespace SeanDotNetDocker.Controllers
         {
             var foo = await _db.WebSettings.Where(s => s.SettingKey.Equals("sean")).FirstOrDefaultAsync();
 
-            return Content("Test is => " + foo.Value);
+            return Content("Message from server => " + foo.Value);
         }
 
         public IActionResult Privacy()

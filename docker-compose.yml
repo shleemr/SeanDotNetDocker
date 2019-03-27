@@ -18,7 +18,10 @@ services:
 
   seanmysql:
     container_name: seanmysql
-    build: ./Docker-Mysql/.
+    #build: ./Docker-Mysql/.
+    build:
+      context: Docker-Mysql
+      dockerfile: Dockerfile
     #command: --default-authentication-plugin=mysql_native_password
     restart: always
     ports:
