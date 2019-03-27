@@ -13,8 +13,6 @@ services:
       - seanmysql
     networks: 
       - seannet
-    ports:
-      - "80:80"
 
   seanmysql:
     container_name: seanmysql
