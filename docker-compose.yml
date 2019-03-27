@@ -6,19 +6,18 @@ services:
     build:
       context: .
       dockerfile: SeanDotNetDocker/Dockerfile
-    ports:
-      - "32774:80"
     restart: always
     depends_on: 
       - seanmysql
     links:
       - seanmysql
+    expose:
+      - "80"
     networks: 
       - seannet
 
   seanmysql:
     container_name: seanmysql
-    #build: ./Docker-Mysql/.
     build:
       context: ./SeanMysql
       dockerfile: Dockerfile
