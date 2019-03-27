@@ -11,10 +11,10 @@ services:
       - seanmysql
     links:
       - seanmysql
-    expose:
-      - "80"
     networks: 
       - seannet
+    ports:
+      - "80:80"
 
   seanmysql:
     container_name: seanmysql
