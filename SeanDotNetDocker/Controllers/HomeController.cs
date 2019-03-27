@@ -21,11 +21,18 @@ namespace SeanDotNetDocker.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var foo = await _db.WebSettings.Where(s => s.SettingKey.Equals("sean")).FirstOrDefaultAsync();
-            if (foo != null)
-                ViewBag.msg = foo.Value;
-            else ViewBag.msg = "fuck you!";
+            //var foo = await _db.WebSettings.Where(s => s.SettingKey.Equals("sean")).FirstOrDefaultAsync();
+            //if (foo != null)
+            //    ViewBag.msg = foo.Value;
+            //else ViewBag.msg = "fuck you!";
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Test()
+        {
+            var foo = await _db.WebSettings.Where(s => s.SettingKey.Equals("sean")).FirstOrDefaultAsync();
+            return Content("Test is => " + foo.Value);
         }
 
         public IActionResult Privacy()

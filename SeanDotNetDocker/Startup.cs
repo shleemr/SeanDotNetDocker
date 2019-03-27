@@ -37,6 +37,9 @@ namespace SeanDotNetDocker
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.AddHttpContextAccessor();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             DependencyInjectionContainer(services);
         }
 
@@ -57,6 +60,7 @@ namespace SeanDotNetDocker
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseCors("AllowAnyOrigin");
             app.UseStaticFiles();
             app.UseCookiePolicy();
 

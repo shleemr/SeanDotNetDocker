@@ -9,13 +9,22 @@ services:
     ports:
       - "32774:80"
     restart: always
+    depends_on: 
+      - seanmysql
     links:
       - seanmysql
+    networks: 
+      - seannet
 
   seanmysql:
     container_name: seanmysql
     build: ./Docker-Mysql/.
-    command: --default-authentication-plugin=mysql_native_password
+    #command: --default-authentication-plugin=mysql_native_password
     restart: always
     ports:
       - "3306:3306"
+    networks: 
+      - seannet
+
+networks: 
+  seannet:

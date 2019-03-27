@@ -5,5 +5,34 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-	<h1>@ViewBag.msg</h1>
+	<h4>Hi. Sean</h4>
+
+	<button onclick="Test()">Test</button>
+	@*<h1>@ViewBag.msg</h1>*@
 </div>
+
+<script>
+	function Test() {
+		console.log('Test clicked');
+
+		var xhr = new XMLHttpRequest();
+
+		xhr.open('GET', '/Home/Test');
+
+		xhr.send();
+
+		// Event Handler
+		xhr.onreadystatechange = function () {
+
+			if (xhr.readyState === XMLHttpRequest.DONE) {
+				if (xhr.status === 200) {
+
+					console.log('ajax succeed : ' + xhr.responseText);
+
+				} else {
+					console.log('[' + xhr.status + ']: ' + xhr.statusText);
+				}
+			}
+		};
+	}
+</script>
