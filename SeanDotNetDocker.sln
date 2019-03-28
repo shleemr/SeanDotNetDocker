@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.539
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeanDotNetDocker", "SeanDotNetDocker\SeanDotNetDocker.csproj", "{5AA6B0C2-664A-4E6D-8BAE-68B91C2ACBDE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeanDotNetDocker", "SeanDotNetDocker\SeanDotNetDocker.csproj", "{5AA6B0C2-664A-4E6D-8BAE-68B91C2ACBDE}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{172DEDE4-54BD-43C0-BC53-20F0A22C4400}"
 EndProject
