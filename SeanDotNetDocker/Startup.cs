@@ -15,9 +15,11 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using SeanDotNetDocker.DataAccess;
 using SeanDotNetDocker.Models.Note;
+using SeanDotNetDocker.Models.User;
 
 namespace SeanDotNetDocker
 {
@@ -136,13 +138,18 @@ namespace SeanDotNetDocker
 
         private void DependencyInjectionContainer(IServiceCollection services)
         {
+            services.AddTransient<IUserRepository, UserRepository>();
+
             services.AddTransient<INoteCommentRepository, NoteCommentRepository>();
             services.AddTransient<INoteRepository, NoteRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

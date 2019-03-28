@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using SeanDotNetDocker.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,8 +13,7 @@ namespace SeanDotNetDocker.Models.Note
     public class NoteRepository : INoteRepository
     {
         private IConfiguration _config;
-        //private SqlConnection con;
-        private IDbConnection con; // SqlConnection에서 IDbConnection으로 변경
+        private DBContext _db;
         private ILogger<NoteRepository> _logger;
         private IMemoryCache _cache;
 
@@ -21,13 +21,12 @@ namespace SeanDotNetDocker.Models.Note
         /// 환경변수와 로그 개체 주입
         /// </summary>
         public NoteRepository(
-            IConfiguration config, ILogger<NoteRepository> logger, IMemoryCache memoryCache)
+            IConfiguration config, ILogger<NoteRepository> logger, IMemoryCache memoryCache, DBContext db)
         {
             _config = config; 
-            con = new SqlConnection(_config.GetSection("ConnectionStrings")
-                .GetSection("DefaultConnection").Value);
             _logger = logger;
             _cache = memoryCache;
+            _db = db;
         }
 
         /// <summary>
@@ -315,7 +314,41 @@ namespace SeanDotNetDocker.Models.Note
             //    + " Where Category = @Category Order By Id Desc";
             //return con.Query<Note>(sql, new { Category = category }).ToList();
 
-            return null;
+            var note = new Note
+            {
+                Id = 1,
+                Name = "아무개",
+                Email = "nobody@company.com",
+                Title = "게시글제목",
+                PostDate = DateTime.Now,
+                PostIp = "192.168.0.1",
+                Content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                Password = "111",
+                ReadCount = 111,
+                Encoding = "UTF-8",
+                Homepage = "",
+                ModifyDate = DateTime.Now,
+                ModifyIp = "",
+                FileName = "",
+                FileSize = 0,
+                DownCount = 0,
+                Ref = 0,
+                Step = 0,
+                RefOrder = 0,
+                AnswerNum = 0,
+                ParentNum = 0,
+                CommentCount = 0,
+                Category = "Free",
+                Num = 0,
+                UserId = 0,
+                CategoryId = 0,
+                BoardId = 0,
+                AplicationId = 0
+            };
+
+            var noteList = new List<Note>();
+            noteList.Add(note);
+            return noteList;
         }
         public List<Note> GetNoteSummaryByCategoryCache(string category)
         {
