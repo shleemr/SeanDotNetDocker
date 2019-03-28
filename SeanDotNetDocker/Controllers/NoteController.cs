@@ -158,50 +158,50 @@ namespace SeanDotNetDocker.Controllers
         public async Task<IActionResult> Create(
             Note model, ICollection<IFormFile> files)
         {
-            //파일 업로드 처리 시작
-            string fileName = String.Empty;
-            int fileSize = 0;
+            ////파일 업로드 처리 시작
+            //string fileName = String.Empty;
+            //int fileSize = 0;
 
-            var uploadFolder = Path.Combine(_environment.WebRootPath, "files");
+            //var uploadFolder = Path.Combine(_environment.WebRootPath, "files");
 
-            foreach (var file in files)
-            {
-                if (file.Length > 0)
-                {
-                    fileSize = Convert.ToInt32(file.Length);
-                    // 파일명 중복 처리
-                    fileName = Dul.FileUtility.GetFileNameWithNumbering(
-                        uploadFolder, Path.GetFileName(
-                            ContentDispositionHeaderValue.Parse(
-                                file.ContentDisposition).FileName.Trim('"')));
-                    // 파일 업로드
-                    using (var fileStream = new FileStream(
-                        Path.Combine(uploadFolder, fileName), FileMode.Create))
-                    {
-                        await file.CopyToAsync(fileStream);
-                    }
-                }
-            }
+            //foreach (var file in files)
+            //{
+            //    if (file.Length > 0)
+            //    {
+            //        fileSize = Convert.ToInt32(file.Length);
+            //        // 파일명 중복 처리
+            //        fileName = Dul.FileUtility.GetFileNameWithNumbering(
+            //            uploadFolder, Path.GetFileName(
+            //                ContentDispositionHeaderValue.Parse(
+            //                    file.ContentDisposition).FileName.Trim('"')));
+            //        // 파일 업로드
+            //        using (var fileStream = new FileStream(
+            //            Path.Combine(uploadFolder, fileName), FileMode.Create))
+            //        {
+            //            await file.CopyToAsync(fileStream);
+            //        }
+            //    }
+            //}
 
-            Note note = new Note();
+            //Note note = new Note();
 
-            note.Name = model.Name;
-            note.Email = Dul.HtmlUtility.Encode(model.Email);
-            note.Homepage = model.Homepage;
-            note.Title = Dul.HtmlUtility.Encode(model.Title);
-            note.Content = model.Content;
-            note.FileName = fileName;
-            note.FileSize = fileSize;
-            note.Password =
-                Common.CryptorEngine.EncryptPassword(model.Password);
-            note.PostIp =
-                HttpContext.Connection.RemoteIpAddress.ToString(); // IP 주소
-            note.Encoding = model.Encoding;
+            //note.Name = model.Name;
+            //note.Email = Dul.HtmlUtility.Encode(model.Email);
+            //note.Homepage = model.Homepage;
+            //note.Title = Dul.HtmlUtility.Encode(model.Title);
+            //note.Content = model.Content;
+            //note.FileName = fileName;
+            //note.FileSize = fileSize;
+            //note.Password =
+            //    Common.CryptorEngine.EncryptPassword(model.Password);
+            //note.PostIp =
+            //    HttpContext.Connection.RemoteIpAddress.ToString(); // IP 주소
+            //note.Encoding = model.Encoding;
 
-            _repository.Add(note); // 데이터 저장
+            //_repository.Add(note); // 데이터 저장
 
-            // 데이터 저장 후 리스트 페이지 이동시 toastr로 메시지 출력
-            TempData["Message"] = "데이터가 저장되었습니다.";
+            //// 데이터 저장 후 리스트 페이지 이동시 toastr로 메시지 출력
+            //TempData["Message"] = "데이터가 저장되었습니다.";
 
             return RedirectToAction("Index"); // 저장 후 리스트 페이지로 이동
         }
@@ -242,57 +242,59 @@ namespace SeanDotNetDocker.Controllers
         /// </summary>
         public IActionResult Details(int id)
         {
-            // 넘겨온 Id 값에 해당하는 레코드 하나 읽어서 Note 클래스에 바인딩
-            var note = _repository.GetNoteById(id);
+            //// 넘겨온 Id 값에 해당하는 레코드 하나 읽어서 Note 클래스에 바인딩
+            //var note = _repository.GetNoteById(id);
 
-            //[!] 인코딩 방식에 따른 데이터 출력: 
-            // 직접 문자열 비교해도 되지만, 학습목적으로 열거형으로 비교 
-            ContentEncodingType encoding = (ContentEncodingType)Enum.Parse(typeof(ContentEncodingType), note.Encoding);
-            string encodedContent = "";
-            switch (encoding)
-            {
-                // Text : 소스 그대로 표현
-                case ContentEncodingType.Text:
-                    encodedContent = Dul.HtmlUtility.EncodeWithTabAndSpace(note.Content);
-                    break;
-                // Html : HTML 형식으로 출력
-                case ContentEncodingType.Html:
-                    encodedContent = note.Content; // 변환없음
-                    break;
-                // Mixed : 엔터처리만
-                case ContentEncodingType.Mixed:
-                    encodedContent = note.Content.Replace("\r\n", "<br />");
-                    break;
-                // Html : 기본
-                default:
-                    encodedContent = note.Content; // 변환없음
-                    break;
-            }
-            ViewBag.Content = encodedContent; //[!]
+            ////[!] 인코딩 방식에 따른 데이터 출력: 
+            //// 직접 문자열 비교해도 되지만, 학습목적으로 열거형으로 비교 
+            //ContentEncodingType encoding = (ContentEncodingType)Enum.Parse(typeof(ContentEncodingType), note.Encoding);
+            //string encodedContent = "";
+            //switch (encoding)
+            //{
+            //    // Text : 소스 그대로 표현
+            //    case ContentEncodingType.Text:
+            //        encodedContent = Dul.HtmlUtility.EncodeWithTabAndSpace(note.Content);
+            //        break;
+            //    // Html : HTML 형식으로 출력
+            //    case ContentEncodingType.Html:
+            //        encodedContent = note.Content; // 변환없음
+            //        break;
+            //    // Mixed : 엔터처리만
+            //    case ContentEncodingType.Mixed:
+            //        encodedContent = note.Content.Replace("\r\n", "<br />");
+            //        break;
+            //    // Html : 기본
+            //    default:
+            //        encodedContent = note.Content; // 변환없음
+            //        break;
+            //}
+            //ViewBag.Content = encodedContent; //[!]
 
-            // 첨부된 파일 확인
-            if (note.FileName.Length > 1)
-            {
-                //[a] 파일 다운로드 링크: String.Format()으로 표현해 봄 
-                ViewBag.FileName = String.Format("<a href='/DotNetNote/BoardDown?Id={0}'>" + "{1}{2} / 전송수: {3}</a>", note.Id, "<img src=\"/images/ext/ext_zip.gif\" border=\"0\">", note.FileName, note.DownCount);
-                //[b] 이미지 미리보기: C# 6.0 String 보간법으로 표현해 봄
-                if (Dul.BoardLibrary.IsPhoto(note.FileName))
-                {
-                    ViewBag.ImageDown = $"<img src=\'/DotNetNote/ImageDown/{note.Id}\'><br />";
-                }
-            }
-            else
-            {
-                ViewBag.FileName = "(업로드된 파일이 없습니다.)";
-            }
+            //// 첨부된 파일 확인
+            //if (note.FileName.Length > 1)
+            //{
+            //    //[a] 파일 다운로드 링크: String.Format()으로 표현해 봄 
+            //    ViewBag.FileName = String.Format("<a href='/DotNetNote/BoardDown?Id={0}'>" + "{1}{2} / 전송수: {3}</a>", note.Id, "<img src=\"/images/ext/ext_zip.gif\" border=\"0\">", note.FileName, note.DownCount);
+            //    //[b] 이미지 미리보기: C# 6.0 String 보간법으로 표현해 봄
+            //    if (Dul.BoardLibrary.IsPhoto(note.FileName))
+            //    {
+            //        ViewBag.ImageDown = $"<img src=\'/DotNetNote/ImageDown/{note.Id}\'><br />";
+            //    }
+            //}
+            //else
+            //{
+            //    ViewBag.FileName = "(업로드된 파일이 없습니다.)";
+            //}
 
-            // 현재 글에 해당하는 댓글 리스트와 현재 글 번호를 담아서 전달
-            NoteCommentViewModel vm = new NoteCommentViewModel();
-            vm.NoteCommentList = _commentRepository.GetNoteComments(note.Id);
-            vm.BoardId = note.Id;
-            ViewBag.CommentListAndId = vm;
+            //// 현재 글에 해당하는 댓글 리스트와 현재 글 번호를 담아서 전달
+            //NoteCommentViewModel vm = new NoteCommentViewModel();
+            //vm.NoteCommentList = _commentRepository.GetNoteComments(note.Id);
+            //vm.BoardId = note.Id;
+            //ViewBag.CommentListAndId = vm;
 
-            return View(note);
+            //return View(note);
+
+            return View();
         }
 
         /// <summary>
@@ -384,69 +386,71 @@ namespace SeanDotNetDocker.Controllers
             Note model, ICollection<IFormFile> files, 
             int id, string previousFileName = "", int previousFileSize = 0)
         {
-            ViewBag.FormType = BoardWriteFormType.Modify;
-            ViewBag.TitleDescription = "글 수정 - 아래 항목을 수정하세요.";
-            ViewBag.SaveButtonText = "수정";
+            //ViewBag.FormType = BoardWriteFormType.Modify;
+            //ViewBag.TitleDescription = "글 수정 - 아래 항목을 수정하세요.";
+            //ViewBag.SaveButtonText = "수정";
 
-            string fileName = "";
-            int fileSize = 0;
+            //string fileName = "";
+            //int fileSize = 0;
 
-            if (previousFileName != null)
-            {
-                fileName = previousFileName;
-                fileSize = previousFileSize;
-            }
+            //if (previousFileName != null)
+            //{
+            //    fileName = previousFileName;
+            //    fileSize = previousFileSize;
+            //}
 
-            //파일 업로드 처리 시작
-            var uploadFolder = Path.Combine(_environment.WebRootPath, "files");
+            ////파일 업로드 처리 시작
+            //var uploadFolder = Path.Combine(_environment.WebRootPath, "files");
 
-            foreach (var file in files)
-            {
-                if (file.Length > 0)
-                {
-                    fileSize = Convert.ToInt32(file.Length);
-                    // 파일명 중복 처리
-                    fileName = Dul.FileUtility.GetFileNameWithNumbering(
-                        uploadFolder, Path.GetFileName(
-                            ContentDispositionHeaderValue.Parse(
-                                file.ContentDisposition).FileName.Trim('"')));
-                    // 파일업로드
-                    using (var fileStream = new FileStream(
-                        Path.Combine(uploadFolder, fileName), FileMode.Create))
-                    {
-                        await file.CopyToAsync(fileStream);
-                    }
-                }
-            }
+            //foreach (var file in files)
+            //{
+            //    if (file.Length > 0)
+            //    {
+            //        fileSize = Convert.ToInt32(file.Length);
+            //        // 파일명 중복 처리
+            //        fileName = Dul.FileUtility.GetFileNameWithNumbering(
+            //            uploadFolder, Path.GetFileName(
+            //                ContentDispositionHeaderValue.Parse(
+            //                    file.ContentDisposition).FileName.Trim('"')));
+            //        // 파일업로드
+            //        using (var fileStream = new FileStream(
+            //            Path.Combine(uploadFolder, fileName), FileMode.Create))
+            //        {
+            //            await file.CopyToAsync(fileStream);
+            //        }
+            //    }
+            //}
 
-            Note note = new Note();
+            //Note note = new Note();
 
-            note.Id = id;
-            note.Name = model.Name;
-            note.Email = Dul.HtmlUtility.Encode(model.Email);
-            note.Homepage = model.Homepage;
-            note.Title = Dul.HtmlUtility.Encode(model.Title);
-            note.Content = model.Content;
-            note.FileName = fileName;
-            note.FileSize = fileSize;
-            note.Password =
-                Common.CryptorEngine.EncryptPassword(model.Password);
-            note.ModifyIp =
-                HttpContext.Connection.RemoteIpAddress.ToString(); // IP 주소
-            note.Encoding = model.Encoding;
+            //note.Id = id;
+            //note.Name = model.Name;
+            //note.Email = Dul.HtmlUtility.Encode(model.Email);
+            //note.Homepage = model.Homepage;
+            //note.Title = Dul.HtmlUtility.Encode(model.Title);
+            //note.Content = model.Content;
+            //note.FileName = fileName;
+            //note.FileSize = fileSize;
+            //note.Password =
+            //    Common.CryptorEngine.EncryptPassword(model.Password);
+            //note.ModifyIp =
+            //    HttpContext.Connection.RemoteIpAddress.ToString(); // IP 주소
+            //note.Encoding = model.Encoding;
 
-            int r = _repository.UpdateNote(note); // 데이터베이스에 수정 적용
-            if (r > 0)
-            {
-                TempData["Message"] = "수정되었습니다.";
-                return RedirectToAction("Details", new { Id = id });
-            }
-            else
-            {
-                ViewBag.ErrorMessage =
-                    "업데이트가 되지 않았습니다. 암호를 확인하세요.";
-                return View(note);
-            }
+            //int r = _repository.UpdateNote(note); // 데이터베이스에 수정 적용
+            //if (r > 0)
+            //{
+            //    TempData["Message"] = "수정되었습니다.";
+            //    return RedirectToAction("Details", new { Id = id });
+            //}
+            //else
+            //{
+            //    ViewBag.ErrorMessage =
+            //        "업데이트가 되지 않았습니다. 암호를 확인하세요.";
+            //    return View(note);
+            //}
+
+            return View();
         }
 
         /// <summary>
@@ -484,51 +488,53 @@ namespace SeanDotNetDocker.Controllers
         public async Task<IActionResult> Reply(
             Note model, ICollection<IFormFile> files, int id)
         {
-            //파일 업로드 처리 시작
-            string fileName = String.Empty;
-            int fileSize = 0;
+            ////파일 업로드 처리 시작
+            //string fileName = String.Empty;
+            //int fileSize = 0;
 
-            var uploadFolder = Path.Combine(_environment.WebRootPath, "files");
+            //var uploadFolder = Path.Combine(_environment.WebRootPath, "files");
 
-            foreach (var file in files)
-            {
-                if (file.Length > 0)
-                {
-                    fileSize = Convert.ToInt32(file.Length);
-                    // 파일명 중복 처리
-                    fileName = Dul.FileUtility.GetFileNameWithNumbering(
-                        uploadFolder, Path.GetFileName(
-                            ContentDispositionHeaderValue.Parse(
-                                file.ContentDisposition).FileName.Trim('"')));
-                    // 파일 업로드
-                    using (var fileStream = new FileStream(
-                        Path.Combine(uploadFolder, fileName), FileMode.Create))
-                    {
-                        await file.CopyToAsync(fileStream);
-                    }
-                }
-            }
+            //foreach (var file in files)
+            //{
+            //    if (file.Length > 0)
+            //    {
+            //        fileSize = Convert.ToInt32(file.Length);
+            //        // 파일명 중복 처리
+            //        fileName = Dul.FileUtility.GetFileNameWithNumbering(
+            //            uploadFolder, Path.GetFileName(
+            //                ContentDispositionHeaderValue.Parse(
+            //                    file.ContentDisposition).FileName.Trim('"')));
+            //        // 파일 업로드
+            //        using (var fileStream = new FileStream(
+            //            Path.Combine(uploadFolder, fileName), FileMode.Create))
+            //        {
+            //            await file.CopyToAsync(fileStream);
+            //        }
+            //    }
+            //}
 
-            Note note = new Note();
+            //Note note = new Note();
 
-            note.Id = note.ParentNum = Convert.ToInt32(id); // 부모글 저장
-            note.Name = model.Name;
-            note.Email = Dul.HtmlUtility.Encode(model.Email);
-            note.Homepage = model.Homepage;
-            note.Title = Dul.HtmlUtility.Encode(model.Title);
-            note.Content = model.Content;
-            note.FileName = fileName;
-            note.FileSize = fileSize;
-            note.Password =
-                Common.CryptorEngine.EncryptPassword(model.Password);
-            note.PostIp = HttpContext.Connection.RemoteIpAddress.ToString();
-            note.Encoding = model.Encoding;
+            //note.Id = note.ParentNum = Convert.ToInt32(id); // 부모글 저장
+            //note.Name = model.Name;
+            //note.Email = Dul.HtmlUtility.Encode(model.Email);
+            //note.Homepage = model.Homepage;
+            //note.Title = Dul.HtmlUtility.Encode(model.Title);
+            //note.Content = model.Content;
+            //note.FileName = fileName;
+            //note.FileSize = fileSize;
+            //note.Password =
+            //    Common.CryptorEngine.EncryptPassword(model.Password);
+            //note.PostIp = HttpContext.Connection.RemoteIpAddress.ToString();
+            //note.Encoding = model.Encoding;
 
-            _repository.ReplyNote(note); // 데이터 답변 저장
+            //_repository.ReplyNote(note); // 데이터 답변 저장
 
-            TempData["Message"] = "데이터가 저장되었습니다.";
+            //TempData["Message"] = "데이터가 저장되었습니다.";
 
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+
+            return View();
         }
 
         /// <summary>

@@ -53,9 +53,7 @@ namespace SeanDotNetDocker
                     options.Password.RequireLowercase = false;
                 }).AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
 
-            if (environment.IsStaging() || environment.IsProduction())
-                services.AddDbContext<DBContext>(options => options.UseMySql(connectionstring));
-            else services.AddDbContext<DBContext>(options => options.UseMySql(connectionstring));
+            services.AddDbContext<DBContext>(options => options.UseMySql(connectionstring));
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -147,9 +145,6 @@ namespace SeanDotNetDocker
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
